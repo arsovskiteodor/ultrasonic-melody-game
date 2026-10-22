@@ -1,0 +1,64 @@
+Name     Name ;
+PartNo   00 ;
+Date     10/6/2024 ;
+Revision 01 ;
+Designer Engineer ;
+Company  LaSalle ;
+Assembly None ;
+Location  ;
+Device   G22v10 ;
+
+/* *************** INPUT PINS *********************/
+PIN 1    = Clk;                        
+PIN 2    = PCI;                        
+PIN 3    = Ack;                      
+PIN 4    = Key_Pressed;                
+PIN 5    = ms_16;                      
+PIN 6    = Hashtag;                    
+PIN 7    = Pressed_1;                  
+PIN 8    = Keys_16;                    
+PIN 9    = D2;
+PIN 10   = D1;
+PIN 11   = D0;
+PIN 13   = Sec_1;                        
+/* *************** OUTPUT PINS *********************/
+PIN 14   = Q0;
+PIN 15   = Q1;
+PIN 16   = Q2;
+PIN 17   = T_Row;
+PIN 18   = T_Save;
+PIN 19   = Start_Game;
+PIN 20   = New_Note;
+PIN 21   = T_Key;
+PIN 22   = T_Led;
+PIN 23   = Reset1;
+
+E0 = !D2 & !D1 & !D0;
+E1 = !D2 & !D1 & D0;
+E2 = !D2 & D1 & !D0;
+E3 = !D2 & D1 & D0;
+E4 = D2 & !D1 & !D0;
+E5 = D2 & !D1 & D0;
+E6 = D2 & D1 & !D0;
+E7 = D2 & D1 & D0;
+
+S0 = E0 & Key_Pressed # E6 & Ack # !PCI;
+S1 = E0 & (!Key_Pressed) # E1 & !ms_16 & !Key_Pressed;
+S2 = E2 # E0 & Keys_16 # E1 & ms_16 & Hashtag & !Pressed_1;
+S3 = E7 & Sec_1 # E3 & !Sec_1 & !Key_Pressed;
+S4 = E3 & Sec_1 # E4 & !Key_Pressed;
+S5 = Key_Pressed & (E7 # E3 # E4) # E5 & !ms_16;
+S6 = E5 & ms_16 # E6 & !Ack;
+S7 = E1 & ms_16 & !Hashtag # E7 & !Sec_1 & !Key_Pressed;
+
+Q2 = S4 # S5 # S6 # S7;
+Q1 = S2 # S3 # S6 # S7;
+Q0 = S1 # S3 # S5 # S7;
+
+T_Row = E0 & !Clk;
+T_Save = !Clk & (E7 # E1 # E0);
+Start_Game = E2;
+New_Note = !E6;
+Reset1 = (!E6 & !E1 & !E0 & !E5);
+T_Key = ms_16 & E5;
+T_Led = !Clk & (E7 # E3 # E4);

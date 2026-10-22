@@ -1,0 +1,7 @@
+# MPLAB X build output and machine-specific files
+build/
+debug/
+dist/
+nbproject/private/
+nbproject/Makefile-local-*.mk
+nbproject/Makefile-genesis.properties

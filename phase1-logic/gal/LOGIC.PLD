@@ -1,0 +1,49 @@
+Name     Logic ;
+PartNo   00 ;
+Date     10/7/2024 ;
+Revision 01 ;
+Designer Engineer ;
+Company  LaSalle ;
+Assembly None ;
+Location  ;
+Device   G22v10 ;
+
+/* *************** INPUT PINS *********************/
+PIN 1     = CLK;
+PIN 5     = KeyPressed;
+PIN 6     = Start_Game;
+PIN 7     = PCI;
+PIN 8     = QSweep;
+PIN 9     =  D2                       ; /*                                 */
+PIN 10    =  D1                       ; /*                                 */
+PIN 11    =  D0                       ; /*                                 */                                
+
+/* *************** OUTPUT PINS *********************/
+PIN 14    = TK                        ; /*                                 */
+PIN 15    = LED0                        ; /*                                 */
+PIN 16    = LED1                        ; /*                                 */
+PIN 17    = Display;
+PIN 18    = Reset2;
+PIN 19    = NOTQSweep;
+PIN 20    = NOTPCI;
+PIN 21    = MR_16K_2;
+PIN 22    = En16;
+
+E0 = !D2 & !D1 & !D0;
+E1 = !D2 & !D1 & D0;
+E2 = !D2 & D1 & !D0;
+E3 = !D2 & D1 & D0;
+E4 = D2 & !D1 & !D0;
+E5 = D2 & !D1 & D0;
+E6 = D2 & D1 & !D0;
+E7 = D2 & D1 & D0;
+
+TK = E7 # E3;
+LED0 = E7 # E4;
+LED1 = E3 # E4;
+Display = E7 # E3 # E4 # E5 # E6;
+Reset2 = !E6 & !E7 & !E3 & !E4 & !E0;
+NOTQSweep = !QSweep;
+NOTPCI = !PCI;
+MR_16K_2 = !(!PCI # !Start_Game);
+En16 = E5 # E1;
