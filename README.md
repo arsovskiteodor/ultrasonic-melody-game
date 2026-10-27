@@ -5,7 +5,12 @@ The player programs a melody of up to 16 notes on a matrix keypad. They then pla
 a hand above an ultrasonic sensor, where each distance band plays a different note. A servo needle
 shows the score.
 
-![Board, top view](docs/board_above.jpeg)
+## Demo
+
+https://github.com/user-attachments/assets/a0b407ee-d65c-4a3e-a936-15a88be4dad6
+
+A melody is entered on the keypad, then played back by moving a hand above the ultrasonic sensor. The
+display shows each target note, the LEDs show whether it was hit, and the servo needle tracks the score.
 
 ## How it works
 
